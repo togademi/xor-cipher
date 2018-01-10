@@ -9,12 +9,12 @@ typedef unsigned char byte;
 
 int main(int argc, char const *argv[]) {
   int i, longClef, mode, cNumArgs=argc-2;
-  char inputName[100], outputName[100], clef[20];
+  char inputName[100], outputName[100], clef[20], OuiNonClef=0;
   byte message[256];
 
   if (argc == 1 || argc > 7 || (argc % 2 != 1)) {
     printf("ERROR: command line\n");
-    exit(EXIT_FAILURE);
+    exit(-1);
   }
 
   for (i=1; i<=cNumArgs; i=i+2) {
@@ -31,20 +31,20 @@ int main(int argc, char const *argv[]) {
     }
     else if (strcmp(argv[i], "-k") == 0) {
       strcpy(clef, argv[i+1]);
-
+      OuiNonClef = 1;
     }
     else if (strcmp(argv[i], "-m") == 0) {
       mode = *argv[i+1];
     }
     else {
       printf("ERROR: command line\n");
-      exit(EXIT_FAILURE);
+      exit(-1);
     }
   }
 
-  if ((clef[0] != 0) && (clef[0] != '\0') && (verifClef(clef, longClef) == 0)) {
+  if ((OuiNonClef == 1) && (verifClef(clef, longClef) == 0)) {
     printf("ERROR: key\n");
-    exit(EXIT_FAILURE);
+    exit(-1);
   }
 
   FILE *input, *output;
@@ -65,12 +65,12 @@ int main(int argc, char const *argv[]) {
   }
   else {
     printf("ERROR: file\n");
-    exit(EXIT_FAILURE);
+    exit(-1);
   }
 
   if (!output) {
     printf("ERROR: file\n");
-    exit(EXIT_FAILURE);
+    exit(-1);
   }
 
   cipher(message, clef, input, output);

@@ -22,27 +22,6 @@ const long int numClef = sizeof(admisClef) / sizeof(admisClef[0]);
 // Nombre de caractères admis pour le message
 const long int numMessage = sizeof(admisMessage) / sizeof(admisMessage[0]);
 
-// void allocation(size_t longClef, int copieTab[3][100]) {
-//   int i=0;
-//   int ** tabClef = NULL;
-//   tabClef = malloc(longClef * sizeof(byte));
-//
-//   if (tabClef == NULL) //Si l'allocation a echoue
-//   {
-//     printf("Allocation a echoue\n");
-//     return; // On arrete immediatement le programme
-//   }
-//   // On peut continuer le programme normalement sinon
-//
-//   // Creer matrice
-//   for (i=0; i<longClef; i++) {
-//     tabClef[i] = malloc(100 * sizeof(byte));
-//   }
-//
-//   /* Copie du tableau dans un pointeur pour le sortir de la fonction */
-//   copieTab = tabClef;
-// }
-
 int verifClef(char clef[20], int longClef) {
   int i, j, compteur=0;
 
@@ -64,16 +43,6 @@ int verifClef(char clef[20], int longClef) {
 
 
 int crack1(byte message[], int longClef) {
-
-  //char message[] = "  <k�";
-  //size_t longMessage = strlen(message);
-  //char clef[] = "x";
-  //size_t longClef = strlen(clef);
-
-
-
-
-
   /*
   cMessage = compteur pour parcourir caracteres du message
 
@@ -84,23 +53,14 @@ int crack1(byte message[], int longClef) {
   int cMessage=0, cClef=0, cCaractereMessage=0, ligne=0, col=0;
 
   int tabClef[longClef][100];
-
-  printf("longClef = %d\n", longClef);
-  printf("numClef = %ld\n", numClef);
-  printf("numMessage = %ld\n", numMessage);
-
   int i=0;
 
   /* On parcours le message caractere par caractere */
   for (cMessage=0; cMessage<256; cMessage++) {
     printf("Caractere message numero %d\n", cMessage);
     for (cClef=0; cClef<numClef; cClef++) {
-      //printf("admisClef = %c - %d\n", admisClef[cClef],cClef);
-      //printf("Caractere clef numero %d\n", cClef);
-      printf("- %d -\n", i);
       i++;
       for (cCaractereMessage=0; cCaractereMessage<numMessage; cCaractereMessage++) {
-        //printf("admisMessage = %c - %d\n", admisMessage[cCaractereMessage],cCaractereMessage);
         if ((message[cMessage] ^ admisClef[cClef]) == admisMessage[cCaractereMessage]) {
           tabClef[ligne][col] = admisClef[cClef];
           col++;
@@ -117,11 +77,13 @@ int crack1(byte message[], int longClef) {
       col = 0;
     }
   }
-  for (ligne=0; ligne<longClef; ligne++) {
-    for (col=0; col<100; col++) {
+
+  for (ligne=0; ligne < longClef; ligne++) {
+    for (col=0; col < 100; col++) {
       printf("%c ", tabClef[ligne][col]);
     }
     printf("\n");
   }
+
   return 0;
 }
