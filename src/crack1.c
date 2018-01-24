@@ -6,11 +6,13 @@
 
 typedef unsigned char byte;
 
+/* Caracteres admis par la clef */
 const byte admisClef[] = {65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,
 83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,
 106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,44,45,
 46,58,63,95,123,125,48,49,50,51,52,53,54,55,56,57};
 
+/* Caracteres admis par le message */
 const byte admisMessage[] = {65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,
 83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,
 106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,44,45,
@@ -22,9 +24,11 @@ const long int numClef = sizeof(admisClef) / sizeof(admisClef[0]);
 // Nombre de caractères admis pour le message
 const long int numMessage = sizeof(admisMessage) / sizeof(admisMessage[0]);
 
+// Verifier les caracteres de la clef
 int verifClef(char clef[20], int longClef) {
   int i, j, compteur=0;
 
+/* Pour chaque caractere de la clef, compteur augmente de 1 si le caractere est valide */
   for (i=0; i<longClef; i++) {
     for (j=0; j<numClef; j++) {
       if (clef[i] == admisClef[j]) {
@@ -32,8 +36,10 @@ int verifClef(char clef[20], int longClef) {
         break;
       }
     }
+
   }
-  if ((compteur+1) == longClef) {
+  /* Si compteur est egal a la longueur de la clef, alors c'est que la clef est valide */
+  if ((compteur) == longClef) {
     return 1;
   }
   else {
@@ -56,8 +62,7 @@ int crack1(byte message[], int longClef) {
   int i=0;
 
   /* On parcours le message caractere par caractere */
-  for (cMessage=0; cMessage<256; cMessage++) {
-    printf("Caractere message numero %d\n", cMessage);
+  for (cMessage=0; cMessage<255; cMessage++) {
     for (cClef=0; cClef<numClef; cClef++) {
       i++;
       for (cCaractereMessage=0; cCaractereMessage<numMessage; cCaractereMessage++) {
@@ -78,6 +83,7 @@ int crack1(byte message[], int longClef) {
     }
   }
 
+// On affiche le tableau de clefs possibles
   for (ligne=0; ligne < longClef; ligne++) {
     for (col=0; col < 100; col++) {
       printf("%c ", tabClef[ligne][col]);
